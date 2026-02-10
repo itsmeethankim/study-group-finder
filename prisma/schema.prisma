@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  createdGroups  StudyGroup[]
+  memberships    Membership[]
+}
+
+model StudyGroup {
+  id          String   @id @default(cuid())
+  title       String
+  course      String
+  location    String
+  startsAt    DateTime
+  seats       Int
+  description String
+  createdAt   DateTime @default(now())
+  creatorId   String
+
+  creator    User         @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  memberships Membership[]
+}
+
+model Membership {
+  id        String   @id @default(cuid())
+  userId    String
+  groupId   String
+  createdAt DateTime @default(now())
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group StudyGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, groupId])
+}
