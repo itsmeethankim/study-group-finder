@@ -36,9 +36,9 @@ jobs:
       - name: Deploy containers
         run: |
           set -e
+          docker system prune -af || true
           cd ~/app
-          docker login ghcr.io -u ${{ github.repository_owner }} -p "${{ secrets.GHCR_TOKEN }}"
-          docker compose pull
+          echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
           docker compose up -d
           docker compose exec -T app npx prisma migrate deploy
           curl -f http://localhost/api/health
