@@ -31,7 +31,9 @@ export default function RootLayout({
       >
         <AuthProvider>
           <Navbar />
-          <main className="pt-16">{children}</main>
+          <main className="min-h-screen bg-zinc-100 pt-16 text-zinc-900">
+            {children}
+          </main>
         </AuthProvider>
       </body>
     </html>
