@@ -26,7 +26,10 @@ jobs:
       - name: Build and push (linux/amd64)
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/study-group-finder:latest
-          docker buildx build --platform linux/amd64 -t $IMAGE --push .
+          docker buildx build --platform linux/amd64 \
+            --build-arg DATABASE_URL="postgresql://postgres:postgres@localhost:5432/studygroups" \
+            -t $IMAGE --push .
+
 
   deploy_on_ec2:
     runs-on: self-hosted

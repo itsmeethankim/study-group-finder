@@ -8,6 +8,10 @@ RUN npm run build
 
 FROM node:20-alpine AS runner
 WORKDIR /app
+
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
+
 ENV NODE_ENV=production
 
 COPY --from=builder /app/package*.json ./
