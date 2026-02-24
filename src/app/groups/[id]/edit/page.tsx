@@ -66,135 +66,143 @@ export default function EditGroupPage() {
 
   if (error && !group) {
     return (
-      <div className="mx-auto max-w-md px-4 py-12">
-        <p className="text-red-600">{error}</p>
-        <Link href="/groups" className="mt-4 inline-block text-zinc-600 hover:underline">
-          Back to groups
-        </Link>
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
+        <div className="glass-card p-8 text-center">
+          <p className="alert-error">{error}</p>
+          <Link href="/groups" className="mt-4 inline-block text-sm font-medium gradient-text hover:underline">
+            Back to groups
+          </Link>
+        </div>
       </div>
     );
   }
 
   if (!group) {
     return (
-      <div className="mx-auto max-w-md px-4 py-12">
-        <p className="text-zinc-600">Loading...</p>
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
+        <p style={{ color: 'var(--text-secondary)' }}>Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-12">
-      <h1 className="text-2xl font-bold text-zinc-900">Edit study group</h1>
-      <p className="mt-2 text-zinc-600">
-        Update your group details.
-      </p>
-      {error && (
-        <p className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
-          {error}
-        </p>
-      )}
-      <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="title" className="text-sm font-medium text-zinc-700">
-            Title
-          </label>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            required
-            defaultValue={group.title}
-            className="rounded-lg border border-zinc-300 px-4 py-2 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
-            placeholder="e.g. CS 101 Study Group"
-          />
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12">
+      <div className="w-full max-w-lg animate-fade-in">
+        <div className="glass-card p-8">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+            Edit study group
+          </h1>
+          <p className="mt-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+            Update your group details.
+          </p>
+          {error && (
+            <p className="mt-4 alert-error">{error}</p>
+          )}
+          <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="title" className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                Title
+              </label>
+              <input
+                id="title"
+                name="title"
+                type="text"
+                required
+                defaultValue={group.title}
+                className="input-dark"
+                placeholder="e.g. CS 101 Study Group"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="course" className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                  Course
+                </label>
+                <input
+                  id="course"
+                  name="course"
+                  type="text"
+                  required
+                  defaultValue={group.course}
+                  className="input-dark"
+                  placeholder="e.g. CS 101"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="seats" className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                  Seats
+                </label>
+                <input
+                  id="seats"
+                  name="seats"
+                  type="number"
+                  min={1}
+                  required
+                  defaultValue={group.seats}
+                  className="input-dark"
+                  placeholder="10"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="location" className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                Location
+              </label>
+              <input
+                id="location"
+                name="location"
+                type="text"
+                required
+                defaultValue={group.location}
+                className="input-dark"
+                placeholder="e.g. Library Room 201"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="startsAt" className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                Start time
+              </label>
+              <input
+                id="startsAt"
+                name="startsAt"
+                type="datetime-local"
+                required
+                defaultValue={toDatetimeLocal(group.startsAt)}
+                className="input-dark"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="description" className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                rows={4}
+                required
+                defaultValue={group.description}
+                className="input-dark"
+                placeholder="What will you study? When do you meet?"
+              />
+            </div>
+            <div className="flex gap-3 mt-2">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-primary flex-1"
+              >
+                {isSubmitting ? "Saving..." : "Save changes"}
+              </button>
+              <Link
+                href="/groups"
+                className="btn-secondary flex-1 text-center"
+              >
+                Cancel
+              </Link>
+            </div>
+          </form>
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="course" className="text-sm font-medium text-zinc-700">
-            Course
-          </label>
-          <input
-            id="course"
-            name="course"
-            type="text"
-            required
-            defaultValue={group.course}
-            className="rounded-lg border border-zinc-300 px-4 py-2 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
-            placeholder="e.g. CS 101"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="location" className="text-sm font-medium text-zinc-700">
-            Location
-          </label>
-          <input
-            id="location"
-            name="location"
-            type="text"
-            required
-            defaultValue={group.location}
-            className="rounded-lg border border-zinc-300 px-4 py-2 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
-            placeholder="e.g. Library Room 201"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="startsAt" className="text-sm font-medium text-zinc-700">
-            Start time
-          </label>
-          <input
-            id="startsAt"
-            name="startsAt"
-            type="datetime-local"
-            required
-            defaultValue={toDatetimeLocal(group.startsAt)}
-            className="rounded-lg border border-zinc-300 px-4 py-2 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="seats" className="text-sm font-medium text-zinc-700">
-            Seats
-          </label>
-          <input
-            id="seats"
-            name="seats"
-            type="number"
-            min={1}
-            required
-            defaultValue={group.seats}
-            className="rounded-lg border border-zinc-300 px-4 py-2 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
-            placeholder="10"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="description" className="text-sm font-medium text-zinc-700">
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            rows={4}
-            required
-            defaultValue={group.description}
-            className="rounded-lg border border-zinc-300 px-4 py-2 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
-            placeholder="What will you study? When do you meet?"
-          />
-        </div>
-        <div className="flex gap-2">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="rounded-lg bg-zinc-900 px-4 py-2 font-medium text-white transition hover:bg-zinc-800 disabled:opacity-50"
-          >
-            {isSubmitting ? "Saving..." : "Save changes"}
-          </button>
-          <Link
-            href="/groups"
-            className="rounded-lg border border-zinc-300 px-4 py-2 font-medium text-zinc-700 hover:bg-zinc-50"
-          >
-            Cancel
-          </Link>
-        </div>
-      </form>
+      </div>
     </div>
   );
 }

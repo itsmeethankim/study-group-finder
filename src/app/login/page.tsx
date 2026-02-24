@@ -33,56 +33,60 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-12">
-      <h1 className="text-2xl font-bold text-zinc-900">Log in</h1>
-      <p className="mt-2 text-zinc-600">
-        Sign in to create and join study groups.
-      </p>
-      {error && (
-        <p className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
-          {error}
-        </p>
-      )}
-      <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="email" className="text-sm font-medium text-zinc-700">
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            className="rounded-lg border border-zinc-300 px-4 py-2 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
-            placeholder="you@example.com"
-          />
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
+      <div className="w-full max-w-md animate-fade-in">
+        <div className="glass-card p-8">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+            Welcome back
+          </h1>
+          <p className="mt-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+            Sign in to create and join study groups.
+          </p>
+          {error && (
+            <p className="mt-4 alert-error">{error}</p>
+          )}
+          <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email" className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className="input-dark"
+                placeholder="you@example.com"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="password" className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                className="input-dark"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-primary mt-2"
+            >
+              {isSubmitting ? "Logging in..." : "Log in"}
+            </button>
+          </form>
+          <p className="mt-6 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
+            Don&apos;t have an account?{" "}
+            <Link href="/register" className="font-medium gradient-text hover:underline">
+              Register
+            </Link>
+          </p>
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="password" className="text-sm font-medium text-zinc-700">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            className="rounded-lg border border-zinc-300 px-4 py-2 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="rounded-lg bg-zinc-900 px-4 py-2 font-medium text-white transition hover:bg-zinc-800 disabled:opacity-50"
-        >
-          {isSubmitting ? "Logging in..." : "Log in"}
-        </button>
-      </form>
-      <p className="mt-4 text-center text-sm text-zinc-600">
-        Don&apos;t have an account?{" "}
-        <Link href="/register" className="font-medium text-zinc-900 hover:underline">
-          Register
-        </Link>
-      </p>
+      </div>
     </div>
   );
 }

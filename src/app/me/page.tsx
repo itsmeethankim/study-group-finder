@@ -28,18 +28,18 @@ export default function MePage() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-6xl px-4 py-8">
-        <h1 className="text-2xl font-bold text-zinc-900">My Dashboard</h1>
-        <p className="mt-4 text-zinc-600">Loading...</p>
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <h1 className="text-3xl font-bold section-title" style={{ color: 'var(--text-primary)' }}>My Dashboard</h1>
+        <p className="mt-6" style={{ color: 'var(--text-secondary)' }}>Loading...</p>
       </div>
     );
   }
 
   if (error && !data) {
     return (
-      <div className="mx-auto max-w-6xl px-4 py-8">
-        <h1 className="text-2xl font-bold text-zinc-900">My Dashboard</h1>
-        <p className="mt-4 text-red-600">{error}</p>
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <h1 className="text-3xl font-bold section-title" style={{ color: 'var(--text-primary)' }}>My Dashboard</h1>
+        <p className="mt-6 alert-error">{error}</p>
       </div>
     );
   }
@@ -49,34 +49,44 @@ export default function MePage() {
   const { createdGroups, joinedGroups } = data;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
-      <h1 className="text-2xl font-bold text-zinc-900">My Dashboard</h1>
-      <p className="mt-2 text-zinc-600">
+    <div className="mx-auto max-w-6xl px-4 py-10 animate-fade-in">
+      <h1 className="text-3xl font-bold section-title" style={{ color: 'var(--text-primary)' }}>
+        My Dashboard
+      </h1>
+      <p className="mt-4" style={{ color: 'var(--text-secondary)' }}>
         Groups you created and groups you joined.
       </p>
 
-      <section className="mt-10">
-        <h2 className="text-lg font-semibold text-zinc-900">My Created Groups</h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="mt-12">
+        <h2 className="text-xl font-semibold section-title" style={{ color: 'var(--text-primary)' }}>
+          My Created Groups
+        </h2>
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {createdGroups.length > 0 ? (
             createdGroups.map((group) => (
               <GroupCard key={group.id} group={group} onRefetch={refetch} />
             ))
           ) : (
-            <p className="text-zinc-500">You haven&apos;t created any groups yet.</p>
+            <div className="col-span-full glass-card p-6 text-center">
+              <p style={{ color: 'var(--text-muted)' }}>You haven&apos;t created any groups yet.</p>
+            </div>
           )}
         </div>
       </section>
 
-      <section className="mt-10">
-        <h2 className="text-lg font-semibold text-zinc-900">Joined Groups</h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="mt-12">
+        <h2 className="text-xl font-semibold section-title" style={{ color: 'var(--text-primary)' }}>
+          Joined Groups
+        </h2>
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {joinedGroups.length > 0 ? (
             joinedGroups.map((group) => (
               <GroupCard key={group.id} group={group} onRefetch={refetch} />
             ))
           ) : (
-            <p className="text-zinc-500">You haven&apos;t joined any groups yet.</p>
+            <div className="col-span-full glass-card p-6 text-center">
+              <p style={{ color: 'var(--text-muted)' }}>You haven&apos;t joined any groups yet.</p>
+            </div>
           )}
         </div>
       </section>

@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <Navbar />
-          <main className="min-h-screen bg-zinc-100 pt-16 text-zinc-900">
+          <main className="min-h-screen pt-16" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
             {children}
           </main>
         </AuthProvider>

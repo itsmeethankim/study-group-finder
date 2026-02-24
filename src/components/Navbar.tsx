@@ -13,41 +13,32 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-200 bg-white px-4 py-3">
+    <nav className="glass-navbar fixed top-0 left-0 right-0 z-50 px-4 py-3">
       <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <Link href="/" className="text-lg font-semibold text-zinc-900">
+        <Link href="/" className="text-lg font-bold gradient-text">
           Study Group Finder
         </Link>
-        <div className="flex items-center gap-4">
-          <Link
-            href="/groups"
-            className="text-zinc-600 transition hover:text-zinc-900"
-          >
+        <div className="flex items-center gap-6">
+          <Link href="/groups" className="nav-link text-sm">
             Groups
           </Link>
-          <Link
-            href="/groups/new"
-            className="text-zinc-600 transition hover:text-zinc-900"
-          >
+          <Link href="/groups/new" className="nav-link text-sm">
             Create
           </Link>
-          <Link
-            href="/me"
-            className="text-zinc-600 transition hover:text-zinc-900"
-          >
-            Me
+          <Link href="/me" className="nav-link text-sm">
+            Dashboard
           </Link>
           {isLoggedIn === true ? (
             <button
               onClick={handleLogout}
-              className="text-zinc-600 transition hover:text-zinc-900"
+              className="btn-secondary text-sm !py-2 !px-4"
             >
               Logout
             </button>
           ) : (
             <Link
               href="/login"
-              className="text-zinc-600 transition hover:text-zinc-900"
+              className="btn-primary text-sm !py-2 !px-4"
             >
               Login
             </Link>

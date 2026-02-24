@@ -21,31 +21,35 @@ export default function GroupsPage() {
 
   if (error) {
     return (
-      <div className="mx-auto max-w-6xl px-4 py-8">
-        <h1 className="text-2xl font-bold text-zinc-900">Study Groups</h1>
-        <p className="mt-4 text-red-600">{error}</p>
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <h1 className="text-3xl font-bold section-title" style={{ color: 'var(--text-primary)' }}>Study Groups</h1>
+        <p className="mt-6 alert-error">{error}</p>
       </div>
     );
   }
 
   if (groups === null) {
     return (
-      <div className="mx-auto max-w-6xl px-4 py-8">
-        <h1 className="text-2xl font-bold text-zinc-900">Study Groups</h1>
-        <p className="mt-4 text-zinc-600">Loading...</p>
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <h1 className="text-3xl font-bold section-title" style={{ color: 'var(--text-primary)' }}>Study Groups</h1>
+        <p className="mt-6" style={{ color: 'var(--text-secondary)' }}>Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
-      <h1 className="text-2xl font-bold text-zinc-900">Study Groups</h1>
-      <p className="mt-2 text-zinc-600">
+    <div className="mx-auto max-w-6xl px-4 py-10 animate-fade-in">
+      <h1 className="text-3xl font-bold section-title" style={{ color: 'var(--text-primary)' }}>
+        Study Groups
+      </h1>
+      <p className="mt-4" style={{ color: 'var(--text-secondary)' }}>
         Browse study groups or create your own.
       </p>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {groups.length === 0 ? (
-          <p className="col-span-full text-zinc-500">No groups yet. Create the first one!</p>
+          <div className="col-span-full glass-card p-8 text-center">
+            <p style={{ color: 'var(--text-muted)' }}>No groups yet. Be the first to create one!</p>
+          </div>
         ) : (
           groups.map((group) => (
             <GroupCard key={group.id} group={group} onRefetch={refetch} />

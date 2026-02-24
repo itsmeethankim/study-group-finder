@@ -62,31 +62,64 @@ export default function GroupCard({ group, onRefetch }: GroupCardProps) {
   const canJoin = !group.joinedByMe && !isFull;
   const showJoinLeave = group.joinedByMe !== undefined;
   const isCreator = group.isCreator ?? false;
+  const fillPercent = Math.min((group.memberCount / group.seats) * 100, 100);
 
   return (
-    <article className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm transition hover:border-zinc-300 hover:shadow">
-      <h3 className="font-semibold text-zinc-900">{group.title}</h3>
-      <p className="mt-2 text-sm text-zinc-600">{group.description}</p>
-      <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-zinc-500">
-        <span className="rounded bg-zinc-100 px-2 py-0.5">{group.course}</span>
-        <span>
-          {group.memberCount}/{group.seats} members
-        </span>
-        {group.location && <span>{group.location}</span>}
+    <article className="glass-card p-5 flex flex-col gap-3">
+      <div className="flex items-start justify-between gap-2">
+        <h3 className="font-semibold text-base" style={{ color: 'var(--text-primary)' }}>
+          {group.title}
+        </h3>
+        <span className="badge shrink-0">{group.course}</span>
+      </div>
+
+      <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+        {group.description}
+      </p>
+
+      {/* Member bar */}
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-center justify-between text-xs" style={{ color: 'var(--text-muted)' }}>
+          <span>{group.memberCount}/{group.seats} members</span>
+          {isFull && (
+            <span className="text-xs font-medium" style={{ color: '#f87171' }}>Full</span>
+          )}
+        </div>
+        <div className="member-bar">
+          <div
+            className="member-bar-fill"
+            style={{ width: `${fillPercent}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Meta info */}
+      <div className="flex flex-wrap items-center gap-3 text-xs" style={{ color: 'var(--text-muted)' }}>
+        {group.location && (
+          <span className="flex items-center gap-1">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+            {group.location}
+          </span>
+        )}
         {group.startsAt && (
-          <span>{new Date(group.startsAt).toLocaleString()}</span>
+          <span className="flex items-center gap-1">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+            {new Date(group.startsAt).toLocaleString()}
+          </span>
         )}
       </div>
+
       {error && (
-        <p className="mt-2 text-sm text-red-600">{error}</p>
+        <p className="alert-error">{error}</p>
       )}
-      <div className="mt-3 flex flex-wrap gap-2">
+
+      <div className="mt-auto flex flex-wrap gap-2 pt-2">
         {showJoinLeave && canJoin && (
           <button
             type="button"
             onClick={handleJoin}
             disabled={loading !== null}
-            className="rounded bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
+            className="btn-primary text-sm !py-2 !px-4"
           >
             {loading === "join" ? "Joining..." : "Join"}
           </button>
@@ -96,7 +129,7 @@ export default function GroupCard({ group, onRefetch }: GroupCardProps) {
             type="button"
             onClick={handleLeave}
             disabled={loading !== null}
-            className="rounded border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-700 hover:bg-zinc-50 disabled:opacity-50"
+            className="btn-secondary text-sm !py-2 !px-4"
           >
             {loading === "leave" ? "Leaving..." : "Leave"}
           </button>
@@ -105,7 +138,7 @@ export default function GroupCard({ group, onRefetch }: GroupCardProps) {
           <>
             <Link
               href={`/groups/${group.id}/edit`}
-              className="rounded border border-zinc-300 px-3 py-1.5 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
+              className="btn-secondary text-sm !py-2 !px-4 inline-flex items-center"
             >
               Edit
             </Link>
@@ -113,7 +146,7 @@ export default function GroupCard({ group, onRefetch }: GroupCardProps) {
               type="button"
               onClick={handleDelete}
               disabled={loading !== null}
-              className="rounded border border-red-300 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
+              className="btn-danger text-sm !py-2 !px-4"
             >
               {loading === "delete" ? "Deleting..." : "Delete"}
             </button>
